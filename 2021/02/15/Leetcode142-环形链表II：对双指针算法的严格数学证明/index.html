@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/images/favicon.ico">
-  <title>冰柠配绿茶的秘密后花园</title>
+  <title>Leetcode142-环形链表II：对双指针算法的严格数学证明 | 冰柠配绿茶的秘密后花园</title>
   <meta name="author" content="FrozenLemonTee" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,19 +13,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="Leetcode, 双指针, 算法" />
   
-  <meta name="description" content="先学会做好自己">
-<meta property="og:type" content="website">
-<meta property="og:title" content="冰柠配绿茶的秘密后花园">
-<meta property="og:url" content="https://frozenlemontee.github.io/tags/%E5%85%B6%E4%BB%96/index.html">
+  <meta name="description" content="原文引自我的力扣题解：针对Floyd 快慢指针算法阶段二的严格数学证明 双指针解法过程我们使用两个指针，fast 与 slow。它们起始都位于链表的头部。随后，slow 指针每次向后移动一个位置，而 fast指针向后移动两个位置。如果链表中存在环，则 fast指针最终将再次与slow 指针在环中相遇。  证明从链表头部出发的步数与最后处于的节点编号的函数关系式对于一个带环的链表，若在环外（包括入环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode142-环形链表II：对双指针算法的严格数学证明">
+<meta property="og:url" content="https://frozenlemontee.github.io/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/index.html">
 <meta property="og:site_name" content="冰柠配绿茶的秘密后花园">
-<meta property="og:description" content="先学会做好自己">
+<meta property="og:description" content="原文引自我的力扣题解：针对Floyd 快慢指针算法阶段二的严格数学证明 双指针解法过程我们使用两个指针，fast 与 slow。它们起始都位于链表的头部。随后，slow 指针每次向后移动一个位置，而 fast指针向后移动两个位置。如果链表中存在环，则 fast指针最终将再次与slow 指针在环中相遇。  证明从链表头部出发的步数与最后处于的节点编号的函数关系式对于一个带环的链表，若在环外（包括入环">
 <meta property="og:locale">
-<meta property="og:image" content="https://frozenlemontee.github.io/images/favicon.ico">
+<meta property="og:image" content="https://frozenlemontee.github.io/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E1.jpg">
+<meta property="article:published_time" content="2021-02-15T10:48:31.000Z">
+<meta property="article:modified_time" content="2021-02-15T11:30:15.375Z">
 <meta property="article:author" content="FrozenLemonTee">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="双指针">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://frozenlemontee.github.io/images/favicon.ico">
+<meta name="twitter:image" content="https://frozenlemontee.github.io/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E1.jpg">
 <meta name="twitter:site" content="@frozenlemontee">
   
   <!-- 站点验证相关 -->
@@ -162,50 +167,154 @@
                     
 
         <section class="col-md-8">
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    <img class="stickyimg" src="/images/sticky.webp">
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/02/14/%E7%BD%91%E7%AB%99%E6%AD%A3%E5%9C%A8%E6%96%BD%E5%B7%A5%E4%B8%AD%EF%BC%81/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/02/14/%E7%BD%91%E7%AB%99%E6%AD%A3%E5%9C%A8%E6%96%BD%E5%B7%A5%E4%B8%AD%EF%BC%81/">网站正在施工中！~~</a><strong>——置顶</strong></h2>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    稍安勿躁~~~~
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a><i class="fa fa-calendar"></i></a><a>2021-02-14</a>
-                            <a><i class="fa fa-tags"></i></a>
-                            <a class="tag-none-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a>
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/02/14/%E7%BD%91%E7%AB%99%E6%AD%A3%E5%9C%A8%E6%96%BD%E5%B7%A5%E4%B8%AD%EF%BC%81/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">Leetcode142-环形链表II：对双指针算法的严格数学证明</h1>
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-02-15</li>
+                    <li><i class="fa fa-user"></i> 作者 FrozenLemonTee</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            649
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1613388615375"></time> 前，其中的内容可能需要更新。
                 </div>
-            </article>
-        
-    
-    
-    
-</section>
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E8%A7%A3%E6%B3%95%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">双指针解法过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">证明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E9%93%BE%E8%A1%A8%E5%A4%B4%E9%83%A8%E5%87%BA%E5%8F%91%E7%9A%84%E6%AD%A5%E6%95%B0%E4%B8%8E%E6%9C%80%E5%90%8E%E5%A4%84%E4%BA%8E%E7%9A%84%E8%8A%82%E7%82%B9%E7%BC%96%E5%8F%B7%E7%9A%84%E5%87%BD%E6%95%B0%E5%85%B3%E7%B3%BB%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">从链表头部出发的步数与最后处于的节点编号的函数关系式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.2.</span> <span class="toc-text">步骤</span></a></li></ol></li></ol>
+                    </div>
+                
+                <hr />
+                <p><strong>原文引自我的力扣题解：</strong><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/zhen-dui-floyd-kuai-man-zhi-zhen-suan-fa-jie-duan-/">针对Floyd 快慢指针算法阶段二的严格数学证明</a></p>
+<h3 id="双指针解法过程"><a href="#双指针解法过程" class="headerlink" title="双指针解法过程"></a>双指针解法过程</h3><p>我们使用两个指针，<code>fast</code> 与 <code>slow</code>。它们起始都位于链表的头部。随后，<code>slow</code> 指针每次向后移动一个位置，而 <code>fast</code>指针向后移动两个位置。如果链表中存在环，则 <code>fast</code>指针最终将再次与<code>slow</code> 指针在环中相遇。 </p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><h4 id="从链表头部出发的步数与最后处于的节点编号的函数关系式"><a href="#从链表头部出发的步数与最后处于的节点编号的函数关系式" class="headerlink" title="从链表头部出发的步数与最后处于的节点编号的函数关系式"></a>从链表头部出发的步数与最后处于的节点编号的函数关系式</h4><p>对于一个带环的链表，若在环外（包括入环起始位置的节点）的节点数为F，环内节点数目为C，由链表起始位置出发的步数为x，最终指向的节点编号为M，当x&lt;F时，有M = x; 当x&gt;=F时，有F+(x-F)%C，如下图所示。</p>
+<p><img src="/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E2.png"></p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>在第一阶段中，慢指针走了x=n步，快指针走了x=2n步.显然n&gt;=F，则M(n)=F+(n-F)%C,M(2n)=F+(2n-F)%C.<br>此时快慢指针相遇，则M(n)=M(2n).<br>即F+(n-F)%C = F+(2n-F)%C<br>即(n-F)%C = (2n-F)%C<br>则((2n-F) - (n-F))%C = 0.<br>求得 n%C=0 (*)</p>
+<p>阶段二指针一从链表头部出发，指针二从阶段一相遇处出发，两指针相遇且为入环起始位置，有：<br>M(n+F) = M(F) = F 成立.<br>M(F) = F 显然成立.<br>对于M(n+F) = F，有：<br>M(n+F) = F+(n+F - F)%C = F + n%C<br>将(*)代入，M(n+F) = F + n%C = F + 0 = F.</p>
+<p>所以阶段二的结论是正确的，证毕.</p>
 
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "https://frozenlemontee.github.io/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "https://frozenlemontee.github.io/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/";
+            const title         = "「Leetcode142-环形链表II：对双指针算法的严格数学证明」";
+            const excerpt       = `原文引自我的力扣题解：针对Floyd 快慢指针算法阶段二的严格数学证明
+双指针解法过程我们使用两个指针，fast 与 slow。它们起始都位于链表的头部。随后，slow 指针每次向后移动一个位置，而 fast指针向后移动两个位置。如果...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/Leetcode/" rel="tag">Leetcode</a>, <a class="tag-none-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" rel="tag">双指针</a>, <a class="tag-none-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-02-15</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" PAT乙级-1045：动态规划实现" href="/2021/02/15/PAT乙级-1045：动态规划实现/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" (无标题)" href="/2333/01/01/阅读有感_intro/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
 
                 
             
@@ -229,6 +338,18 @@
     </div>
 </aside>
             
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E8%A7%A3%E6%B3%95%E8%BF%87%E7%A8%8B"><span class="toc-text">双指针解法过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E6%98%8E"><span class="toc-text">证明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E9%93%BE%E8%A1%A8%E5%A4%B4%E9%83%A8%E5%87%BA%E5%8F%91%E7%9A%84%E6%AD%A5%E6%95%B0%E4%B8%8E%E6%9C%80%E5%90%8E%E5%A4%84%E4%BA%8E%E7%9A%84%E8%8A%82%E7%82%B9%E7%BC%96%E5%8F%B7%E7%9A%84%E5%87%BD%E6%95%B0%E5%85%B3%E7%B3%BB%E5%BC%8F"><span class="toc-text">从链表头部出发的步数与最后处于的节点编号的函数关系式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-text">步骤</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
                 
   <aside id="krw-categories" class="widget widget-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
