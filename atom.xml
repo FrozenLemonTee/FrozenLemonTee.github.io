@@ -114,6 +114,32 @@
   
   <entry>
     <title></title>
+    <link href="https://frozenlemontee.github.io/2021/02/17/%E6%97%A5%E5%B8%B820210217-00/"/>
+    <id>https://frozenlemontee.github.io/2021/02/17/%E6%97%A5%E5%B8%B820210217-00/</id>
+    <published>2021-02-17T14:46:39.000Z</published>
+    <updated>2021-02-17T14:57:38.902Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天想着琢磨怎么自己弄一个git自动化脚本出来方便部署博客的渲染文件和存源文件，于是随便写了写，结果部署博客渲染文件并且传主分支时一不小心把本地源文件分支给盖成以前的了，于是赶紧从远程仓库fetch下来。。。本以为这样就结束了，结果在看远程仓库的源文件分支时一不小心又删掉了，赶紧本地仓库恢复上去。。。以后再也不什么都不清楚就随便乱弄了qwq<del>这就是棺材里仰卧起坐吗</del></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;今天想着琢磨怎么自己弄一个git自动化脚本出来方便部署博客的渲染文件和存源文件，于是随便写了写，结果部署博客渲染文件并且传主分支时一不小心把本地源文件分支给盖成以前的了，于是赶紧从远程仓库fetch下来。。。本以为这样就结束了，结果在看远程仓库的源文件分支时一不小心又删掉了</summary>
+      
+    
+    
+    
+    <category term="生活日常" scheme="https://frozenlemontee.github.io/categories/%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8/"/>
+    
+    
+    <category term="git" scheme="https://frozenlemontee.github.io/tags/git/"/>
+    
+    <category term="github" scheme="https://frozenlemontee.github.io/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
     <link href="https://frozenlemontee.github.io/2021/02/16/%E6%97%A5%E5%B8%B820210216-00/"/>
     <id>https://frozenlemontee.github.io/2021/02/16/%E6%97%A5%E5%B8%B820210216-00/</id>
     <published>2021-02-16T02:05:13.000Z</published>
