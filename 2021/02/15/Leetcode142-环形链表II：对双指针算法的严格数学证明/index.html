@@ -24,7 +24,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://frozenlemontee.github.io/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E1.jpg">
 <meta property="article:published_time" content="2021-02-15T10:48:31.000Z">
-<meta property="article:modified_time" content="2021-02-19T10:58:54.732Z">
+<meta property="article:modified_time" content="2021-02-20T08:02:33.388Z">
 <meta property="article:author" content="FrozenLemonTee">
 <meta property="article:tag" content="Leetcode">
 <meta property="article:tag" content="算法">
@@ -188,7 +188,7 @@
             </header>
             <div class="kratos-post-content">
                 <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1613732334732"></time> 前，其中的内容可能需要更新。
+                    本文最后编辑于 <time datetime="1613808153388"></time> 前，其中的内容可能需要更新。
                 </div>
                 
                     <div class="kratos-post-inner-toc">
@@ -199,7 +199,7 @@
                 <p><strong>原文引自我的力扣题解：</strong><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/zhen-dui-floyd-kuai-man-zhi-zhen-suan-fa-jie-duan-/">针对Floyd 快慢指针算法阶段二的严格数学证明</a></p>
 <h3 id="双指针解法过程"><a href="#双指针解法过程" class="headerlink" title="双指针解法过程"></a>双指针解法过程</h3><p>我们使用两个指针，<code>fast</code> 与 <code>slow</code>。它们起始都位于链表的头部。随后，<code>slow</code> 指针每次向后移动一个位置，而 <code>fast</code>指针向后移动两个位置。如果链表中存在环，则 <code>fast</code>指针最终将再次与<code>slow</code> 指针在环中相遇。 </p>
 <h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><h4 id="从链表头部出发的步数与最后处于的节点编号的函数关系式"><a href="#从链表头部出发的步数与最后处于的节点编号的函数关系式" class="headerlink" title="从链表头部出发的步数与最后处于的节点编号的函数关系式"></a>从链表头部出发的步数与最后处于的节点编号的函数关系式</h4><p>对于一个带环的链表，若在环外（包括入环起始位置的节点）的节点数为F，环内节点数目为C，由链表起始位置出发的步数为x，最终指向的节点编号为M，当x&lt;F时，有M = x; 当x&gt;=F时，有F+(x-F)%C，如下图所示。</p>
-<p><img src="/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E2.png"></p>
+<p><img src="Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E2.png"></p>
 <h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>在第一阶段中，慢指针走了x=n步，快指针走了x=2n步.显然n&gt;=F，则M(n)=F+(n-F)%C,M(2n)=F+(2n-F)%C.<br>此时快慢指针相遇，则M(n)=M(2n).<br>即F+(n-F)%C = F+(2n-F)%C<br>即(n-F)%C = (2n-F)%C<br>则((2n-F) - (n-F))%C = 0.<br>求得 n%C=0 (*)</p>
 <p>阶段二指针一从链表头部出发，指针二从阶段一相遇处出发，两指针相遇且为入环起始位置，有：<br>M(n+F) = M(F) = F 成立.<br>M(F) = F 显然成立.<br>对于M(n+F) = F，有：<br>M(n+F) = F+(n+F - F)%C = F + n%C<br>将(*)代入，M(n+F) = F + n%C = F + 0 = F.</p>
 <p>所以阶段二的结论是正确的，证毕.</p>
@@ -293,7 +293,7 @@
                         <a class="tag-none-link" href="/tags/Leetcode/" rel="tag">Leetcode</a>, <a class="tag-none-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" rel="tag">双指针</a>, <a class="tag-none-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a>
                     </div>
                     <div class="pull-date">
-                    <span>最后编辑：2021-02-19</span>
+                    <span>最后编辑：2021-02-20</span>
                     </div>
                 </div>
             </footer>
