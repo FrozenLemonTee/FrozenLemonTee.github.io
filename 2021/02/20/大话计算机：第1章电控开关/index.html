@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  <title>大话计算机：第1章电控开关 | 冰柠配绿茶的秘密后花园</title>
+  <meta name="author" content="FrozenLemonTee" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="大话计算机, 电路原理, 计算机组成原理" />
+  
+  <meta name="description" content="1.计算机只“认识”的是0和1两种状态，而不是数值 2.精简指令集计算机(RISC:Reduced Instruction Set Computing)用更少的逻辑符号但需要大量符号组合完成更多的任务（类似英文），而复杂指令集计算机(CISC:Complex Instruction Set Computing)用更少的逻辑符号但每个符号表示的含义更复杂完成更多的任务（类似中文） 3.异或门 异或门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大话计算机：第1章电控开关">
+<meta property="og:url" content="https://frozenlemontee.github.io/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/index.html">
+<meta property="og:site_name" content="冰柠配绿茶的秘密后花园">
+<meta property="og:description" content="1.计算机只“认识”的是0和1两种状态，而不是数值 2.精简指令集计算机(RISC:Reduced Instruction Set Computing)用更少的逻辑符号但需要大量符号组合完成更多的任务（类似英文），而复杂指令集计算机(CISC:Complex Instruction Set Computing)用更少的逻辑符号但每个符号表示的含义更复杂完成更多的任务（类似中文） 3.异或门 异或门">
+<meta property="og:locale">
+<meta property="og:image" content="https://frozenlemontee.github.io/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B31.jpg">
+<meta property="article:published_time" content="2021-02-20T10:25:19.000Z">
+<meta property="article:modified_time" content="2021-02-20T11:48:45.013Z">
+<meta property="article:author" content="FrozenLemonTee">
+<meta property="article:tag" content="大话计算机">
+<meta property="article:tag" content="计算机组成原理">
+<meta property="article:tag" content="电路原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://frozenlemontee.github.io/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B31.jpg">
+<meta name="twitter:site" content="@frozenlemontee">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="冰柠配绿茶的秘密后花园" type="application/atom+xml">
+</head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <div class="nav-toggle"><a class="kratos-nav-toggle js-kratos-nav-toggle"><i></i></a></div>
+            <header id="kratos-header-section">
+                <div class="container">
+                    <div class="nav-header">
+                        <div class="color-logo"><a href="/">冰柠配绿茶的秘密后花园</a></div>
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-folder"></i>档案馆</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/categories/%E6%9E%81%E5%AE%A2%E4%B8%96%E7%95%8C/"><i class="fa fa-code"></i>极客世界</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/categories/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E6%8A%84/"><i class="fa fa-pencil"></i>学习小抄</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/categories/%E9%98%85%E8%AF%BB%E6%9C%89%E6%84%9F/"><i class="fa fa-bookmark"></i>阅读有感</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/categories/%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8/"><i class="fa fa-coffee"></i>生活日常</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>小伙伴们</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/search/"><i class="fa fa-search"></i>搜索</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-paper-plane"></i>关于我</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a href="/about/">自我介绍</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://github.com/FrozenLemonTee/">Github主页</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://twitter.com/frozenlemontee">推特主页</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://leetcode-cn.com/u/frozenlemontee/">力扣主页</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://space.bilibili.com/88488273/">B站主页</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://github.com/FrozenLemonTee/FrozenLemonTee.github.io">本项目链接</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>冰柠配绿茶的秘密后花园</h2> <br />
+                        <span>让美好的时光常驻</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">大话计算机：第1章电控开关</h1>
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-02-20</li>
+                    <li><i class="fa fa-user"></i> 作者 FrozenLemonTee</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~3.11K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1613821725013"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                <hr />
+                <p><strong>1.计算机只“认识”的是0和1两种状态，而不是数值</strong></p>
+<p><strong>2.精简指令集计算机</strong>(RISC:Reduced Instruction Set Computing)用更少的逻辑符号但需要大量符号组合完成更多的任务（类似英文），而<strong>复杂指令集计算机</strong>(CISC:Complex Instruction Set Computing)用更少的逻辑符号但每个符号表示的含义更复杂完成更多的任务（类似中文）</p>
+<p><strong>3.异或门</strong></p>
+<p>异或门由或门、与非门和与门构成</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B32.png" class>
+
+<p><strong>4.与门、非门组合成与非门：</strong></p>
+<p>定义 </p>
+<blockquote>
+<p>not(A and B) == A nand B</p>
+</blockquote>
+<p><strong>5.与非门、或门相与组合成异或门：</strong></p>
+<p>定义 </p>
+<blockquote>
+<p>(A nand B) and (A or B) == A xor B</p>
+</blockquote>
+<p>即</p>
+<blockquote>
+<p>(A nand B) and (A or B) == (not(A and B)) and (A or B)</p>
+</blockquote>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B33.png" class>
+
+<p>类似可得<strong>同或门</strong>：</p>
+<blockquote>
+<p>not(A xor B) == A xnor B</p>
+</blockquote>
+<p>即：</p>
+<blockquote>
+<p>not((not(A and B)) and (A or B)) == (A and B) and (not(A or B))</p>
+</blockquote>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B34.png" class>
+
+<p><strong>6.半加器</strong></p>
+<p>不接受低位进位信号的加法器</p>
+<p>本位和的逻辑——异或门：</p>
+<blockquote>
+<p>S0 = A xor B</p>
+</blockquote>
+<p>进位的逻辑——与门：</p>
+<blockquote>
+<p>C1 = A and B</p>
+</blockquote>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B35.png" class>
+
+<p><strong>7.全加器</strong></p>
+<p>在半加器基础上接受低位进位信号</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B36.png" class>
+
+<center>蓝框部分为全加器</center>
+
+<p>A1和B1的半加和S1’与低位进位C0半加，半加的和S1即为本位和，溢出位C1’’与A1、B1半加的溢出位C1’相或，结果为本位的进位CO1</p>
+<p>设第i级加位（i = 0, 1, 2, …）的本位和为Si，低位进位为CIi(Input)，本位进位为COi(Output)，由6可知：</p>
+<blockquote>
+<p>Si = (Ai xor Bi) xor CIi</p>
+</blockquote>
+<blockquote>
+<p>COi = ((Ai xor Bi) and CIi) or (Ai and Bi) </p>
+</blockquote>
+<p>一般的，当i = 0时，CI0 = 0（即在最低位没有更低位的进位输入）</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B37.png" class>
+
+<p>1位全加器可以组成4位全加器，进一步也可以组成8位全加器</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B38.png" class>
+
+<p><strong>8.电磁场建立的时间是光速，但开关动作的响应有时延，知道开关的时延可以估算出整个电路响应所花时间</strong></p>
+<p><strong>9.布尔运算定律</strong></p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B39.png" class>
+
+<blockquote>
+<p><strong>A + A * B</strong> = A * （1+B）=A * 1 <strong>= A</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>A + A’ * B</strong> = <strong>A + B</strong></p>
+</blockquote>
+<p><strong>10.加法并行进位</strong></p>
+<p>由7的Si与SOi表达式循环代入，对于每一个CIi，其值都只与C0相关而与低位进位信号无关</p>
+<blockquote>
+<p>C0 = C0</p>
+<p>C1 = (A1 and B1) or (A1 xor B1) and C0</p>
+<p>C2 = (A2 and B2) or (A2 xor B2) and ((A1 and B1) or (A1 xor B1) and C0)</p>
+<p>C3 = (A3 and B3) or (A3 xor B3) and ((A2 and B2) or (A2 xor B2) and ((A1 and B1) or (A1 xor B1) and C0))</p>
+<p>……</p>
+</blockquote>
+<p>因此串行加法可以变为并行加法降低时延</p>
+<p><strong>11.RS(Reset-Set)触发器</strong></p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B310.png" class>
+
+<p>由两个或非门G1、G2构成</p>
+<p>R端：Reset 重置端，S端：Set 设置端</p>
+<p>Q端为输出端，Q’端输出与Q端信号相反，互为镜像</p>
+<blockquote>
+<p>当S = 0，R = 1 时， Q = 0， Q’ = 1</p>
+<p>当S = 1，R = 0 时， Q = 1， Q’ = 0</p>
+<p>当S = 0，R = 0 时， Q = 1， Q’ = 0 （Q端记忆了之前S = 1的状态信号）</p>
+<p>当S = 1，R = 1 时，状态不确定，<strong>不允许</strong></p>
+</blockquote>
+<p><strong>12.D(Data)触发器</strong></p>
+<p>通过两个与门，当L = 0时可屏蔽R、S端输入</p>
+<p>并且可以保存Q = 0的状态</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B311.png" class>
+
+<p><strong>若 L = 1：</strong></p>
+<blockquote>
+<p>当S = 0，R = 1 时，R’ = 1,  S’ = 0，</p>
+<p>因此 Q = 0， Q’ = 1<strong>（存0）</strong></p>
+</blockquote>
+<blockquote>
+<p>当S = 1，R = 0 时，R’ = 0,  S’ = 1，</p>
+<p>因此 Q = 1， Q’ = 0<strong>（存1）</strong></p>
+</blockquote>
+<p><strong>若 L = 0：</strong></p>
+<p>由于与门，R’ = 0,  S’ = 0</p>
+<blockquote>
+<p>对于Q = 1， Q’ = 0 状态，状态保持Q = 1， Q’ = 0 </p>
+</blockquote>
+<blockquote>
+<p>对于Q = 0， Q’ = 1 状态，由镜像易知与上面状态相反</p>
+</blockquote>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B312.png" class>
+
+<p>由于R 、 S输入相反，通过一个非门可将R、S端简化为DI（Input）端，L端为锁存端，隐去Q’端，原Q端即为DO（Output）端</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B313.png" class>
+
+<p><strong>13.边沿触发器</strong></p>
+<p>将两个D触发器串联，前后两个L输入保证相反，即为边沿型触发器</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B314.png" class>
+
+<p>工作原理示意图如下图：</p>
+<p>左右闸门分别代表L1、L2锁存信号，永远保持相反，放下为0，抬起为1.</p>
+<p>不同颜色代表不同次序的信号，由上图知L = L1’ = L2，由下图知只有L （L2）由0变为1（上升沿）时信号D才能最终透传至Q，因此称为边沿触发.</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B315.png" class>
+
+<p>习惯上Q做输出端，Q’与D端一致，因此相连.波形图如下：</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B316.png" class>
+
+<p><strong>14.时钟电路与计数</strong></p>
+<p>将边沿触发器串联，输出与输入首尾相连，利用边沿触发器延迟输出信号的半频效应可以实现时钟电路.</p>
+<p>每串联一级，时延扩大一倍，如图：</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B317.png" class>
+
+<p>时延效应也可以用于计数:</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B318.png" class>
+
+<p>锁存信号作输入时，每震荡变化一次，相应输出就会变化.</p>
+<p><strong>15.真值表与逻辑表达式、逻辑电路的转化</strong></p>
+<p>规则：将真值表内所有输出为1的行相或，每行内所有输入相与，其中为1的输入保持原输入，为0的输入表达式中取负.</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B319.png" class>
+
+<p>如上图，A、B、C、D为输入，E、F、G、H为输出.</p>
+<blockquote>
+<p>E = A’B’C’D’ + A’B’C’D + A’B’CD’ + A’BC’D’</p>
+<p>F = A’B’C’D’ + A’B’C’D + A’B’CD’</p>
+<p>G = A’B’C’D’ + A’B’C’D</p>
+<p>H = A’B’C’D’</p>
+</blockquote>
+<p>化简后即可得到结果，再将结果表示为逻辑电路.</p>
+<p><strong>16.逻辑1、0与高阻态</strong></p>
+<p>逻辑0与1：此时电路中有电流，逻辑0为低电平，逻辑1为高电平，两者一般会有界限</p>
+<p>高阻态：电路中没有电流，电阻无限大（开路）</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B320.png" class>
+
+<center>通过逻辑0/1控制电路的阻态</center>
+
+<p><strong>17.信号选择器</strong></p>
+<p>每路控制信号分别与一路数据信号构成一个与门，通过控制信号选择相应数据信号输出，输出端汇合用或门保证信号不被干扰、覆盖</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B321.png" class>
+
+<p>对于一个七段数码管，一个数据信号对应一根灯管的亮与灭</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B322.png" class>
+
+<p>输入端电路固定储存显示每种数字对应的数据信号组合</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B323.png" class>
+
+<p>通过一个七位输入——八选一选择器进行信号组的选择，每个数据选择控制线的信号有七个分支，对应一组信号的七个位，总共八根线，对应八组</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B324.png" class>
+
+<p><strong>18.矩阵电路CROSSBAR（只读存储器 ROM）</strong></p>
+<p>通过矩阵电路选择信号，可以减少线路数量，扩充位数更加方便，如下图：</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B325.png" class>
+
+<center>位数扩充前</center>
+
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B326.png" class>
+
+<center>位数扩充后</center>
+
+<p><strong>19.选路器</strong></p>
+<p>选路器用于多对一和一对多的选路，相比CROSSBAR电路更简单。一对多选路器称为DEMUX，多对一选路器称为MUX。</p>
+<p>如图分别为一对二选路器和二对一选路器，选择信号分别为0或1时分别导通两端与门，从而实现选路。</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B327.png" class>
+
+<center>DEMUX和MUX</center>
+
+<p>一对四、四对一类似。</p>
+<p>利用选路器还可以实现CROSSBAR，如下图的二对二XBAR：</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B328.png" class>
+
+<p><strong>20.缓冲队列和读写指针</strong></p>
+<p>为了解决XBAR某个输出端可能同时接受两个输入信号而导致冲突的问题，可以采用若干个串联的锁存器组成缓冲队列。同时还需要专门的锁存器存储队列尾部的位置，这种锁存器称为指针，利用译码器将锁存信息转成DEMUX的控制信号</p>
+<img src="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B329.png" class>
+
+<center>FIFO队列四端口交换矩阵部分逻辑</center>
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "https://frozenlemontee.github.io/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "https://frozenlemontee.github.io/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/";
+            const title         = "「大话计算机：第1章电控开关」";
+            const excerpt       = `1.计算机只“认识”的是0和1两种状态，而不是数值
+2.精简指令集计算机(RISC:Reduced Instruction Set Computing)用更少的逻辑符号但需要大量符号组合完成更多的任务（类似英文），而复杂指令集计算机(...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA/" rel="tag">大话计算机</a>, <a class="tag-none-link" href="/tags/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86/" rel="tag">电路原理</a>, <a class="tag-none-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">计算机组成原理</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-02-20</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" (无标题)" href="/2021/02/17/日常20210217-00/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" (无标题)" href="/2333/01/01/阅读有感_intro/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm sticky-area">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+        <div class="sticky-area-disabled">
+    
+    <!-- 这里现在还是个坑 -->
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.jpg" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"><b>先学会做好自己</b></p>
+    </div>
+</aside>
+            
+                
+  <aside id="krw-categories" class="widget widget-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E5%B0%8F%E6%8A%84/">学习小抄</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%81%E5%AE%A2%E4%B8%96%E7%95%8C/">极客世界</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8/">生活日常</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%98%85%E8%AF%BB%E6%9C%89%E6%84%9F/">阅读有感</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/APDL/" style="font-size: 0.8em;">APDL</a> <a href="/tags/Ansys/" style="font-size: 0.8em;">Ansys</a> <a href="/tags/C/" style="font-size: 0.6em;">C</a> <a href="/tags/Leetcode/" style="font-size: 0.6em;">Leetcode</a> <a href="/tags/PAT/" style="font-size: 0.6em;">PAT</a> <a href="/tags/Python/" style="font-size: 0.6em;">Python</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/github/" style="font-size: 0.6em;">github</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 0.6em;">其他</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 0.6em;">动态规划</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" style="font-size: 0.6em;">双指针</a> <a href="/tags/%E5%96%B5%E8%B5%9B%E5%85%8B/" style="font-size: 0.6em;">喵赛克</a> <a href="/tags/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA/" style="font-size: 0.6em;">大话计算机</a> <a href="/tags/%E5%B7%A5%E7%A8%8B%E4%BB%BF%E7%9C%9F/" style="font-size: 0.8em;">工程仿真</a> <a href="/tags/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86/" style="font-size: 0.6em;">电路原理</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 0.8em;">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 0.6em;">计算机组成原理</a> <a href="/tags/%E9%9F%B3%E6%B8%B8/" style="font-size: 0.6em;">音游</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/02/20/%E5%A4%A7%E8%AF%9D%E8%AE%A1%E7%AE%97%E6%9C%BA%EF%BC%9A%E7%AC%AC1%E7%AB%A0%E7%94%B5%E6%8E%A7%E5%BC%80%E5%85%B3/"><i class="fa  fa-book"></i> 大话计算机：第1章电控开关</a>
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/"><i class="fa  fa-book"></i> Leetcode142-环形链表II：对双指针算法的严格数学证明</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/"><i class="fa  fa-book"></i> PAT乙级-1045：动态规划实现</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/02/15/%E5%88%A9%E7%94%A8Ansys%E8%BF%9B%E8%A1%8C%E6%96%9C%E9%BD%BF%E8%BD%AE%E5%89%AF%E6%8E%A5%E8%A7%A6%E5%88%86%E6%9E%90/"><i class="fa  fa-book"></i> 利用Ansys进行斜齿轮副接触分析</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/02/15/%E5%88%A9%E7%94%A8Ansys%E8%BF%9B%E8%A1%8C%E6%96%9C%E6%8B%89%E6%A1%A5%E7%9A%84%E5%8F%97%E5%8A%9B%E5%88%86%E6%9E%90/"><i class="fa  fa-book"></i> 利用Ansys进行斜拉桥的受力分析</a>
+            
+          
+        
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:1115306170@qq.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://twitter.com/frozenlemontee"><i class="fa fa-twitter"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/FrozenLemonTee"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                      <!-- site_analytics -->
+                      <div id="busuanzi_container_site_pv" style="inline;"><li>本站总访问量: <span id="busuanzi_value_site_pv" style="inline;"></span>次</li> <li>本站访客数: <span id="busuanzi_value_site_uv"></span>人次</li></div>
+                        <div>
+                            <li>&copy; 2021 FrozenLemonTee 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Made with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by <a href="https://candinya.com" target="_blank" rel="nofollow">Candinya</a>.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="6613490674"
+        order="random"
+        fixed="true"
+        autoplay="true"
+    >
+    </meting-js>
+
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    </body>
+</html>
