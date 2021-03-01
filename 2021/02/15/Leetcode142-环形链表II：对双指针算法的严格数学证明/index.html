@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
     <head>
   <!-- 元数据 -->
   <meta charset="utf-8">
@@ -18,11 +18,11 @@
   <meta name="description" content="原文引自我的力扣题解：针对Floyd 快慢指针算法阶段二的严格数学证明 双指针解法过程我们使用两个指针，fast 与 slow。它们起始都位于链表的头部。随后，slow 指针每次向后移动一个位置，而 fast指针向后移动两个位置。如果链表中存在环，则 fast指针最终将再次与slow 指针在环中相遇。  证明从链表头部出发的步数与最后处于的节点编号的函数关系式对于一个带环的链表，若在环外（包括入环">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode142-环形链表II：对双指针算法的严格数学证明">
-<meta property="og:url" content="https://frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/index.html">
+<meta property="og:url" content="https://www.frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/index.html">
 <meta property="og:site_name" content="冰柠配绿茶的秘密后花园">
 <meta property="og:description" content="原文引自我的力扣题解：针对Floyd 快慢指针算法阶段二的严格数学证明 双指针解法过程我们使用两个指针，fast 与 slow。它们起始都位于链表的头部。随后，slow 指针每次向后移动一个位置，而 fast指针向后移动两个位置。如果链表中存在环，则 fast指针最终将再次与slow 指针在环中相遇。  证明从链表头部出发的步数与最后处于的节点编号的函数关系式对于一个带环的链表，若在环外（包括入环">
-<meta property="og:locale">
-<meta property="og:image" content="https://frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E1.jpg">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E1.jpg">
 <meta property="article:published_time" content="2021-02-15T10:48:31.000Z">
 <meta property="article:modified_time" content="2021-02-20T08:44:22.091Z">
 <meta property="article:author" content="FrozenLemonTee">
@@ -30,7 +30,7 @@
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="双指针">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E1.jpg">
+<meta name="twitter:image" content="https://www.frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E1.jpg">
 <meta name="twitter:site" content="@frozenlemontee">
   
   <!-- 站点验证相关 -->
@@ -184,6 +184,17 @@
                         字
                     </li>
                     
+                        <li id="/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/" class="leancloud_visitors" data-flag-title="Leetcode142-环形链表II：对双指针算法的严格数学证明">
+                            <i class="fa fa-eye"></i>
+                            <span class="leancloud-visitors-count"> </span> 次阅读
+                        </li>
+                        
+                            <li>
+                                <i class="fa fa-commenting-o"></i>
+                                <span data-xid="/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/" class="waline-comment-count"> </span> 条评论
+                            </li>
+                        
+                    
                 </ul>
             </header>
             <div class="kratos-post-content">
@@ -257,7 +268,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/",
+                text: "https://www.frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -269,7 +280,7 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/";
+            const hostUrl       = "https://www.frozenlemontee.top/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/";
             const title         = "「Leetcode142-环形链表II：对双指针算法的严格数学证明」";
             const excerpt       = `原文引自我的力扣题解：针对Floyd 快慢指针算法阶段二的严格数学证明
 双指针解法过程我们使用两个指针，fast 与 slow。它们起始都位于链表的头部。随后，slow 指针每次向后移动一个位置，而 fast指针向后移动两个位置。如果...`;
@@ -313,6 +324,26 @@
                 
             </nav>
         
+        
+            <div id="w-comments" class="post-comments"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            new Waline(Object.assign({
+                el: '#w-comments',
+                path: '/2021/02/15/Leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%9A%E5%AF%B9%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/'
+            }, JSON.parse('{"serverURL":"https://commentsblog-p6vu0nfeq-frozenlemontee.vercel.app","placeholder":"说点什么吧~(PS:昵称和邮箱必填哦)","avatar":"mp","requiredFields":["nick","mail"],"visitor":true}')));
+        }
+        if (typeof Waline == 'undefined') {
+            const src = 'https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://waline.js.org/">comments powered by Waline.</a></noscript>
+
         
     </article>
 </section>

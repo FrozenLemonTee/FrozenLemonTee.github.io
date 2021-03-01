@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-CN">
     <head>
   <!-- 元数据 -->
   <meta charset="utf-8">
@@ -18,11 +18,11 @@
   <meta name="description" content="题目详情著名的快速排序算法里有一个经典的划分过程：我们通常采用某种方法取一个元素作为主元，通过交换，把比主元小的元素放到它的左边，比主元大的元素放到它的右边。 给定划分后的 N 个互不相同的正整数的排列，请问有多少个元素可能是划分前选取的主元？ 例如给定 $N &#x3D; 5$, 排列是1、3、2、4、5。则：  1 的左边没有元素，右边的元素都比它大，所以它可能是主元； 尽管 3 的左边元素都比它小，但">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PAT乙级-1045：动态规划实现">
-<meta property="og:url" content="https://frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:url" content="https://www.frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="冰柠配绿茶的秘密后花园">
 <meta property="og:description" content="题目详情著名的快速排序算法里有一个经典的划分过程：我们通常采用某种方法取一个元素作为主元，通过交换，把比主元小的元素放到它的左边，比主元大的元素放到它的右边。 给定划分后的 N 个互不相同的正整数的排列，请问有多少个元素可能是划分前选取的主元？ 例如给定 $N &#x3D; 5$, 排列是1、3、2、4、5。则：  1 的左边没有元素，右边的元素都比它大，所以它可能是主元； 尽管 3 的左边元素都比它小，但">
-<meta property="og:locale">
-<meta property="og:image" content="https://frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B01.png">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B01.png">
 <meta property="article:published_time" content="2021-02-15T09:07:52.000Z">
 <meta property="article:modified_time" content="2021-02-20T09:10:55.927Z">
 <meta property="article:author" content="FrozenLemonTee">
@@ -32,7 +32,7 @@
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B01.png">
+<meta name="twitter:image" content="https://www.frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B01.png">
 <meta name="twitter:site" content="@frozenlemontee">
   
   <!-- 站点验证相关 -->
@@ -186,6 +186,17 @@
                         字
                     </li>
                     
+                        <li id="/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/" class="leancloud_visitors" data-flag-title="PAT乙级-1045：动态规划实现">
+                            <i class="fa fa-eye"></i>
+                            <span class="leancloud-visitors-count"> </span> 次阅读
+                        </li>
+                        
+                            <li>
+                                <i class="fa fa-commenting-o"></i>
+                                <span data-xid="/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/" class="waline-comment-count"> </span> 条评论
+                            </li>
+                        
+                    
                 </ul>
             </header>
             <div class="kratos-post-content">
@@ -289,7 +300,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/",
+                text: "https://www.frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -301,7 +312,7 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/";
+            const hostUrl       = "https://www.frozenlemontee.top/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/";
             const title         = "「PAT乙级-1045：动态规划实现」";
             const excerpt       = `题目详情著名的快速排序算法里有一个经典的划分过程：我们通常采用某种方法取一个元素作为主元，通过交换，把比主元小的元素放到它的左边，比主元大的元素放到它的右边。 给定划分后的 N 个互不相同的正整数的排列，请问有多少个元素可能是划分前选...`;
             let _URL;
@@ -344,6 +355,26 @@
                 
             </nav>
         
+        
+            <div id="w-comments" class="post-comments"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            new Waline(Object.assign({
+                el: '#w-comments',
+                path: '/2021/02/15/PAT%E4%B9%99%E7%BA%A7-1045%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AE%9E%E7%8E%B0/'
+            }, JSON.parse('{"serverURL":"https://commentsblog-p6vu0nfeq-frozenlemontee.vercel.app","placeholder":"说点什么吧~(PS:昵称和邮箱必填哦)","avatar":"mp","requiredFields":["nick","mail"],"visitor":true}')));
+        }
+        if (typeof Waline == 'undefined') {
+            const src = 'https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://waline.js.org/">comments powered by Waline.</a></noscript>
+
         
     </article>
 </section>
